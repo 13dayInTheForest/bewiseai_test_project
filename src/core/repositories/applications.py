@@ -18,6 +18,9 @@ class ApplicationsRepo(IApplicationsRepo):
     async def commit(self) -> None:
         await self.session.commit()
 
+    async def rollback(self) -> None:
+        await self.session.rollback()
+
     # page: страница, size: кол-во элементов на странице
     async def select(self,
                      username: str = None,

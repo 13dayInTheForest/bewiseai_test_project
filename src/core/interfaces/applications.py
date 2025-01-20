@@ -11,6 +11,9 @@ class IApplicationsRepo(ABC):
     async def commit(self) -> None: ...
 
     @abstractmethod
+    async def rollback(self) -> None: ...
+
+    @abstractmethod
     async def select_one_by_id(self, user_id: int) -> ApplicationSchema | None: ...
 
     @abstractmethod

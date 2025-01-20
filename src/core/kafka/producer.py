@@ -23,7 +23,7 @@ class KafkaProducer(IMessageBroker):
         if self.producer is None:
             raise MessageBrokerNotImplement
         try:
-            await self.producer.send_and_wait(value=message.json(), topic=self.topic)
+            await self.producer.send_and_wait(value=message.json().encode('utf-8'), topic=self.topic)
             return True
         except Exception as e:
             raise e

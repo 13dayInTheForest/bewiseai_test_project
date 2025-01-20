@@ -1,3 +1,4 @@
+from src.core.exceptions.base_exc import MessageBrokerMessageNotSent
 from src.core.interfaces.applications import IApplicationsRepo
 from src.core.interfaces.broker import IMessageBroker
 from src.core.schemas.applications import (
@@ -21,12 +22,13 @@ class ApplicationsService:
         app_id = await self.repo.create(application.dict())
         app = await self.repo.select_one_by_id(app_id)
         if app is None:
+            await self.repo.rollback()
             raise http_exc.BadRequestException
 
         message_status = await self.message_broker.send_message(app)
         if not message_status:
-            raise
-
+            await self.repo.rollback()
+            raise MessageBrokerMessageNotSent
         await self.repo.commit()
         return app
 

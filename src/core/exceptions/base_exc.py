@@ -12,3 +12,6 @@ class ConnectFailedException(AbstractBaseException):
 class MessageBrokerNotImplement(AbstractBaseException):
     _message = "Message Broker not implemented"
 
+
+class MessageBrokerMessageNotSent(AbstractBaseException):
+    _message = "Message not sent"
